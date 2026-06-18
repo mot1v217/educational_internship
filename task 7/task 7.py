@@ -1,0 +1,1 @@
+import re; print('Yes' if re.fullmatch(r'[A-Z]\d{3}[A-Z]{2}', input()) else 'No')
