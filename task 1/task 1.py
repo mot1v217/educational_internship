@@ -1,27 +1,19 @@
 h = int(input('h = '))
-summary = []
-list_of_indx = []
-prev_idx = 0
+triangle = []
 for i in range(h):
-    i+=1
-    temp_list = []
-    
-    temp = input()
-    temp_list = temp.split(' ')
-
-    if len(temp_list) == 1 or (len(temp_list) > 1 and temp_list[prev_idx] < temp_list[prev_idx + 1]):
-        list_of_indx.append(prev_idx)
-    else:
-        list_of_indx.append(prev_idx + 1)
-        prev_idx += 1
-
-    summary.append(temp_list)
-
-result = []
-
-for i in range(h):
-    result.append(int(summary[i][list_of_indx[i]]))
-
-print(sum(result))
-print(*(i for i in result))
-
+    row = list(map(int, input().split()))
+    triangle.append(row)
+dp = [[val, [val]] for val in triangle[-1]]
+for i in range(h - 2, -1, -1):
+    new_dp = []
+    for j in range(len(triangle[i])):
+        if dp[j][0] <= dp[j + 1][0]:
+            min_sum = dp[j][0]
+            path = dp[j][1][:]
+        else:
+            min_sum = dp[j + 1][0]
+            path = dp[j + 1][1][:]
+        new_dp.append([triangle[i][j] + min_sum, [triangle[i][j]] + path])
+    dp = new_dp
+print(dp[0][0])
+print(*dp[0][1])
